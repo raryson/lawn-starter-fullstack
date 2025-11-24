@@ -20,10 +20,15 @@ class SwapiController extends Controller
         $resource = $request->query('resource', config('swapi.default_resource'));
         $query = collect($request->query())->except('resource')->toArray();
 
-        // Transform 'search' parameter to 'name' for people resource
-        if ($resource === 'people' && isset($query['search'])) {
-            $query['name'] = $query['search'];
-            unset($query['search']);
+        // Transform 'search' parameter based on resource type
+        if (isset($query['search'])) {
+            if ($resource === 'people') {
+                $query['name'] = $query['search'];
+                unset($query['search']);
+            } elseif ($resource === 'films') {
+                $query['title'] = $query['search'];
+                unset($query['search']);
+            }
         }
 
         // Generate cache key based on resource and query parameters
