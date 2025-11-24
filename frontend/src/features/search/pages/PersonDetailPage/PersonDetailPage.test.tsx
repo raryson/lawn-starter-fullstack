@@ -8,7 +8,7 @@ import * as api from '@/lib/api'
 // Mock the API functions
 vi.mock('@/lib/api', () => ({
   getPersonDetail: vi.fn(),
-  getFilmDetail: vi.fn(),
+  getMovieDetail: vi.fn(),
 }))
 
 const createQueryClient = () => {
@@ -80,15 +80,20 @@ describe('PersonDetailPage', () => {
     }
 
     const mockFilm = {
+      message: 'ok',
       result: {
         properties: {
           title: 'A New Hope',
+          opening_crawl: 'It is a period of civil war...',
         },
+        description: 'A film',
+        uid: '1',
+        _id: '123',
       },
     }
 
     vi.mocked(api.getPersonDetail).mockResolvedValue(mockPerson)
-    vi.mocked(api.getFilmDetail).mockResolvedValue(mockFilm)
+    vi.mocked(api.getMovieDetail).mockResolvedValue(mockFilm)
 
     const router = createTestRouter('1')
     const queryClient = createQueryClient()
@@ -220,23 +225,33 @@ describe('PersonDetailPage', () => {
     }
 
     const mockFilm1 = {
+      message: 'ok',
       result: {
         properties: {
           title: 'A New Hope',
+          opening_crawl: 'It is a period of civil war...',
         },
+        description: 'A film',
+        uid: '1',
+        _id: '123',
       },
     }
 
     const mockFilm2 = {
+      message: 'ok',
       result: {
         properties: {
           title: 'The Empire Strikes Back',
+          opening_crawl: 'It is a dark time for the Rebellion...',
         },
+        description: 'A film',
+        uid: '2',
+        _id: '456',
       },
     }
 
     vi.mocked(api.getPersonDetail).mockResolvedValue(mockPerson)
-    vi.mocked(api.getFilmDetail)
+    vi.mocked(api.getMovieDetail)
       .mockResolvedValueOnce(mockFilm1)
       .mockResolvedValueOnce(mockFilm2)
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { searchSwapi, getPersonDetail, getMovieDetail, getFilmDetail } from './api'
+import { searchSwapi, getPersonDetail, getMovieDetail } from './api'
 
 describe('API functions', () => {
   const originalFetch = global.fetch
@@ -154,28 +154,5 @@ describe('API functions', () => {
     })
   })
 
-  describe('getFilmDetail', () => {
-    it('returns film detail correctly', async () => {
-      const mockResponse = {
-        result: {
-          properties: {
-            title: 'A New Hope',
-          },
-        },
-      }
-
-      ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockResponse,
-      } as Response)
-
-      const result = await getFilmDetail('1')
-
-      expect(result).toEqual(mockResponse)
-      expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8000/api/swapi/films/1'
-      )
-    })
-  })
 })
 

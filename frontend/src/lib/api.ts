@@ -109,16 +109,6 @@ export interface MovieDetail {
   }
 }
 
-export async function getFilmDetail(uid: string): Promise<{ result: { properties: { title: string } } }> {
-  const response = await fetch(`${API_BASE_URL}/swapi/films/${uid}`)
-  
-  if (!response.ok) {
-    throw new Error(`API error: ${response.statusText}`)
-  }
-
-  return response.json()
-}
-
 export async function getMovieDetail(uid: string): Promise<MovieDetail> {
   const response = await fetch(`${API_BASE_URL}/swapi/films/${uid}`)
   

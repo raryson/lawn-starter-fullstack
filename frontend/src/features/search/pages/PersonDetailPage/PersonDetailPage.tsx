@@ -1,7 +1,7 @@
 import './PersonDetailPage.css'
 import { useParams, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import { getPersonDetail, getFilmDetail } from '@/lib/api'
+import { getPersonDetail, getMovieDetail } from '@/lib/api'
 import { PersonDetailsSection, PersonMoviesSection } from '../../components'
 import { Button } from '@/lib/components/Button'
 import { Card } from '@/lib/components/Card'
@@ -26,7 +26,7 @@ export function PersonDetailPage() {
   const { data: films, isLoading: isLoadingFilms } = useQuery({
     queryKey: ['films', filmIds],
     queryFn: async () => {
-      const filmPromises = filmIds.map((id) => getFilmDetail(id))
+      const filmPromises = filmIds.map((id) => getMovieDetail(id))
       const filmData = await Promise.all(filmPromises)
       return filmData.map((film, index) => ({
         uid: filmIds[index],
