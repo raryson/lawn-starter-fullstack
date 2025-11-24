@@ -42,7 +42,23 @@ export async function searchSwapi(
     throw new Error(`API error: ${response.statusText}`)
   }
 
-  return response.json()
+  const data = await response.json()
+  
+  // Transform the response to match the expected format
+  // Backend returns { result: [...] } but frontend expects { results: [...] }
+  if (data.result && Array.isArray(data.result)) {
+    return {
+      ...data,
+      results: data.result.map((item: any) => ({
+        uid: item.uid,
+        name: item.properties?.name,
+        title: item.properties?.title,
+        url: item.properties?.url || item.url,
+      })),
+    }
+  }
+
+  return data
 }
 
 export interface PersonDetail {

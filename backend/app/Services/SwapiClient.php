@@ -31,5 +31,30 @@ class SwapiClient
             ->throw()
             ->json();
     }
+
+    /**
+     * Fetch a single resource by ID
+     *
+     * @throws RequestException
+     * @throws InvalidArgumentException
+     */
+    public function fetchDetail(string $resource, string $id): array
+    {
+        $endpoints = config('swapi.endpoints', []);
+
+        if (! array_key_exists($resource, $endpoints)) {
+            throw new InvalidArgumentException("Unsupported resource [{$resource}].");
+        }
+
+        $baseUrl = rtrim($endpoints[$resource], '/');
+        $url = "{$baseUrl}/{$id}";
+
+        return $this->http
+            ->timeout(config('swapi.timeout'))
+            ->acceptJson()
+            ->get($url)
+            ->throw()
+            ->json();
+    }
 }
 

@@ -46,6 +46,41 @@ paths:
           description: Invalid resource requested
         "502":
           description: Upstream SWAPI error
+  /api/swapi/{resource}/{id}:
+    get:
+      summary: Fetch a single resource by ID
+      description: >
+        Proxies the request to fetch a specific resource by its ID from swapi.tech.
+        This endpoint tracks metrics just like the collection endpoint.
+      parameters:
+        - name: resource
+          in: path
+          required: true
+          description: >
+            SWAPI resource type to fetch.
+          schema:
+            type: string
+            enum: [films, people, planets, species, starships, vehicles]
+        - name: id
+          in: path
+          required: true
+          description: >
+            The unique identifier (UID) of the resource to fetch.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: JSON payload returned by swapi.tech for the specific resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SwapiDetailResponse"
+        "400":
+          description: Invalid resource requested
+        "404":
+          description: Resource not found
+        "502":
+          description: Upstream SWAPI error
   /api/swapi/stats:
     get:
       summary: Retrieve cached statistics about SWAPI usage
@@ -63,6 +98,12 @@ components:
     SwapiProxyResponse:
       type: object
       description: Opaque SWAPI payload. The structure varies per resource.
+      additionalProperties: true
+    SwapiDetailResponse:
+      type: object
+      description: >
+        SWAPI detail payload for a single resource. The structure varies per resource type,
+        but typically includes a `message`, `result` object with `properties`, and metadata.
       additionalProperties: true
     SwapiStatsResponse:
       type: object

@@ -6,6 +6,7 @@ use App\Events\SwapiQueryPerformed;
 use App\Services\SwapiClient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SwapiController extends Controller
 {
@@ -19,13 +20,36 @@ class SwapiController extends Controller
         $resource = $request->query('resource', config('swapi.default_resource'));
         $query = collect($request->query())->except('resource')->toArray();
 
-        $started = microtime(true);
-        $payload = $this->client->fetch($resource, $query);
-        $duration = (int) round((microtime(true) - $started) * 1000);
+        // Transform 'search' parameter to 'name' for people resource
+        if ($resource === 'people' && isset($query['search'])) {
+            $query['name'] = $query['search'];
+            unset($query['search']);
+        }
 
-        SwapiQueryPerformed::dispatch($resource, $duration);
+        // Generate cache key based on resource and query parameters
+        $cacheKey = $this->generateCacheKey($resource, $query);
+
+        // Try to get from cache first (24 hours TTL)
+        $payload = Cache::remember($cacheKey, now()->addHours(24), function () use ($resource, $query) {
+            $started = microtime(true);
+            $data = $this->client->fetch($resource, $query);
+            $duration = (int) round((microtime(true) - $started) * 1000);
+
+            SwapiQueryPerformed::dispatch($resource, $duration);
+
+            return $data;
+        });
 
         return response()->json($payload);
+    }
+
+    private function generateCacheKey(string $resource, array $query): string
+    {
+        // Sort query parameters to ensure consistent cache keys
+        ksort($query);
+        $queryString = http_build_query($query);
+        
+        return "swapi:{$resource}:" . md5($queryString);
     }
 }
 

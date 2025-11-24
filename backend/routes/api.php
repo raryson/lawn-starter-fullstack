@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SwapiController;
+use App\Http\Controllers\SwapiDetailController;
 use App\Http\Controllers\SwapiStatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/swapi', SwapiController::class);
 Route::get('/swapi/stats', SwapiStatsController::class);
+Route::get('/swapi/{resource}/{id}', SwapiDetailController::class);
