@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from '@/routeTree.gen'
+import type { FileRouteTypes } from '@/routeTree.gen'
 import * as api from '@/lib/api'
 
 // Mock the API functions
@@ -21,7 +22,7 @@ const createQueryClient = () => {
   })
 }
 
-const createTestRouter = (initialRoute: string = '/people/1') => {
+const createTestRouter = (initialRoute: FileRouteTypes['fullPaths'] = '/people/1') => {
   const router = createRouter({
     routeTree,
     defaultPreload: 'intent',
@@ -29,7 +30,7 @@ const createTestRouter = (initialRoute: string = '/people/1') => {
   })
 
   // Navigate to the initial route (don't await - router will handle it)
-  router.navigate({ to: initialRoute as any }).catch(() => {
+  router.navigate({ to: initialRoute }).catch(() => {
     // Ignore navigation errors in tests
   })
 

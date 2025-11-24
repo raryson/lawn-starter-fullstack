@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     tanstackRouter(),
-  ] as any,
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

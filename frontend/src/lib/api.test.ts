@@ -52,7 +52,7 @@ describe('API functions', () => {
     })
 
     it('builds correct query parameters', async () => {
-      ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: true,
         json: async () => ({ result: [] }),
       } as Response)
@@ -71,7 +71,7 @@ describe('API functions', () => {
     })
 
     it('throws error when response is not ok', async () => {
-      ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: false,
         statusText: 'Not Found',
       } as Response)
@@ -101,7 +101,6 @@ describe('API functions', () => {
           _id: '123',
         },
       }
-
       ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: true,
         json: async () => mockResponse,
@@ -116,7 +115,7 @@ describe('API functions', () => {
     })
 
     it('throws error when response is not ok', async () => {
-      ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: false,
         statusText: 'Not Found',
       } as Response)

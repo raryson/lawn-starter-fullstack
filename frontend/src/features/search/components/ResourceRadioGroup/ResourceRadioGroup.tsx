@@ -1,5 +1,5 @@
 import './ResourceRadioGroup.css'
-import { type SearchFormApi, type SearchFormValues } from '../../types'
+import { type SearchFormApi } from '../../types'
 import { type SwapiResource } from '@/lib/api'
 
 interface ResourceRadioGroupProps {

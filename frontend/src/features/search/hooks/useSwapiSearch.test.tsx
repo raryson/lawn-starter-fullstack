@@ -3,6 +3,7 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useSwapiSearch } from './useSwapiSearch'
 import * as api from '@/lib/api'
+import type { SwapiResponse } from '@/lib/api'
 
 // Mock the API function
 vi.mock('@/lib/api', () => ({
@@ -93,12 +94,12 @@ describe('useSwapiSearch', () => {
   })
 
   it('shows loading state during search', async () => {
-    let resolvePromise: (value: any) => void
-    const promise = new Promise((resolve) => {
+    let resolvePromise: (value: SwapiResponse) => void
+    const promise = new Promise<SwapiResponse>((resolve) => {
       resolvePromise = resolve
     })
 
-    vi.mocked(api.searchSwapi).mockImplementation(() => promise as Promise<any>)
+    vi.mocked(api.searchSwapi).mockImplementation(() => promise)
 
     const { result } = renderHook(() => useSwapiSearch(), {
       wrapper: createWrapper(),
