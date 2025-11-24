@@ -10,35 +10,6 @@ Backend-only Laravel 10 service that:
 
 Everything necessary to operate the backend lives inside this directory.
 
----
-
-## Quick Start
-
-```bash
-# Install PHP dependencies inside the Sail PHP 8.2 image (has DOM/XML extensions).
-docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
-  -w /app laravelsail/php82-composer:latest composer install
-
-# Copy environment template and tweak DB / queue credentials as needed.
-cp .env.example .env
-
-# Generate the application key (or reuse the existing one from .env).
-docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
-  -w /app laravelsail/php82-composer:latest php artisan key:generate
-
-# Run migrations (creates swapi tables + database queue tables).
-docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
-  -w /app laravelsail/php82-composer:latest php artisan migrate
-
-# Start the HTTP server, queue worker, and scheduler (separate shells).
-docker run --rm -p 8000:8000 -v /home/raryson/projects/lawn-starter/backend:/app \
-  -w /app laravelsail/php82-composer:latest php artisan serve --host=0.0.0.0 --port=8000
-docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
-  -w /app laravelsail/php82-composer:latest php artisan queue:work database
-docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
-  -w /app laravelsail/php82-composer:latest php artisan schedule:work
-```
-
 ### Docker Compose Stack
 
 An alternate workflow that bundles the backend, queue worker, scheduler, and MySQL database lives in `infra/docker-compose.yml`. Recommended commands:
