@@ -38,10 +38,7 @@ export function SearchInput({ form }: SearchInputProps) {
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 placeholder={getPlaceholder(resource || 'people')}
-                className="search-input w-full pt-[5.5px] pr-[50.5px] pb-[5.5px] pl-[5px] rounded-[2px] shadow-[inset_0_0.5px_1.5px_0_rgba(158,158,158,0.75)] border border-pinkish-grey border-solid bg-[#fff] text-gray-900 outline-none border-pinkish-grey focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                style={{
-                  borderRadius: '2px',
-                }}
+                className="search-input w-full min-h-10 rounded-xs border-pinkish-grey"
               />
               {field.state.meta.errors && (
                 <p className="mt-1 text-sm text-red-600">

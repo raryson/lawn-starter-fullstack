@@ -3,7 +3,15 @@
 @tailwind utilities;
 
 :root {
+  /* Brand Colors - Global CSS Variables */
+  --white: #fff;
+  --green-teal: #0ab463;
+  --azure: #0094ff;
   --pinkish-grey: #c4c4c4;
+  --gainsboro: #dadada;
+  --gray22: #383838;
+  --black: #000;
+  --warm-grey-75: rgba(158, 158, 158, 0.75);
 }
 
 @layer base {
