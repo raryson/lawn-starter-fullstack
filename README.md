@@ -17,6 +17,7 @@ Lawn Starter is a modern full-stack application that:
 
 - **Backend**: Laravel 10 API that proxies SWAPI resources, captures metrics, and provides aggregated statistics
 - **Frontend**: React 18 application with TypeScript, featuring a search interface for Star Wars data
+- **API Documentation**: Swagger UI exposed at port 8080 for interactive API exploration
 
 Both services are containerized and can be run together using Docker Compose.
 
@@ -74,7 +75,7 @@ Once all services are running, you can access:
 
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:8000
-- **Swagger UI**: http://localhost:8080
+- **Swagger UI**: http://localhost:8080 - Interactive API documentation interface
 - **MySQL Database**: localhost:3306
   - Database: `lawn`
   - Username: `lawn`
