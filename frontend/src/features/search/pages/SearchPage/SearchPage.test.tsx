@@ -8,6 +8,12 @@ vi.mock('../../hooks/useSwapiSearch', () => ({
   useSwapiSearch: vi.fn(),
 }))
 
+// Mock router hooks
+vi.mock('@tanstack/react-router', () => ({
+  useNavigate: () => vi.fn(),
+  useParams: () => ({}),
+}))
+
 describe('SearchPage', () => {
   it('renders SearchFormPage and ResultsPanelPage', () => {
     vi.mocked(useSwapiSearchHook.useSwapiSearch).mockReturnValue({

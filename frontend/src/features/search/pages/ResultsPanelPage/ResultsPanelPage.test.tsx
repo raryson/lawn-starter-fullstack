@@ -1,7 +1,13 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { ResultsPanelPage } from './ResultsPanelPage'
 import { type SwapiResponse } from '@/lib/api'
+
+// Mock router hooks
+vi.mock('@tanstack/react-router', () => ({
+  useNavigate: () => vi.fn(),
+  useParams: () => ({}),
+}))
 
 describe('ResultsPanelPage', () => {
   const mockResults: SwapiResponse = {

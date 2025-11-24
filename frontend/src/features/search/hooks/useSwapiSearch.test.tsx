@@ -15,6 +15,10 @@ const createWrapper = () => {
     defaultOptions: {
       queries: {
         retry: false,
+        networkMode: 'always',
+      },
+      mutations: {
+        networkMode: 'always',
       },
     },
   })
