@@ -1,3 +1,4 @@
+import './PersonMoviesSection.css'
 import { useNavigate } from '@tanstack/react-router'
 import { type Film } from '@/lib/api'
 

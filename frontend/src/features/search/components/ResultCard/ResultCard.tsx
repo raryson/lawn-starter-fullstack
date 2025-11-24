@@ -1,3 +1,4 @@
+import './ResultCard.css'
 import { useNavigate } from '@tanstack/react-router'
 import { type SwapiResult } from '@/lib/api'
 

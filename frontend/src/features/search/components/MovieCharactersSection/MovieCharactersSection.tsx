@@ -1,3 +1,5 @@
+import './MovieCharactersSection.css'
+
 interface Character {
   uid: string
   name: string

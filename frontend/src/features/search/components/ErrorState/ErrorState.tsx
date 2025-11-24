@@ -1,3 +1,5 @@
+import './ErrorState.css'
+
 interface ErrorStateProps {
   error: Error | unknown
 }

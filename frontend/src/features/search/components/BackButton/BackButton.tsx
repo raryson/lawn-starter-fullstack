@@ -1,3 +1,5 @@
+import './BackButton.css'
+
 interface BackButtonProps {
   onClick: () => void
 }

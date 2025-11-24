@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --pinkish-grey: #c4c4c4;
+}
+
+@layer base {
+  body {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+

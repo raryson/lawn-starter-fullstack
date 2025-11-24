@@ -1,8 +1,6 @@
 import { useForm } from '@tanstack/react-form'
 import { type SwapiResource } from '@/lib/api'
-import { ResourceRadioGroup } from '../components/ResourceRadioGroup'
-import { SearchInput } from '../components/SearchInput'
-import { SearchButton } from '../components/SearchButton'
+import { ResourceRadioGroup, SearchInput, SearchButton } from '../components'
 
 interface SearchFormPageProps {
   onSubmit: (values: { resource: SwapiResource; search: string }) => void

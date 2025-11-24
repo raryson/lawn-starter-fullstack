@@ -1,3 +1,5 @@
+import './OpeningCrawlSection.css'
+
 interface OpeningCrawlSectionProps {
   openingCrawl: string
 }

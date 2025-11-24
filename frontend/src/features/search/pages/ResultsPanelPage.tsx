@@ -1,7 +1,5 @@
 import { type SwapiResponse } from '@/lib/api'
-import { LoadingState } from '../components/LoadingState'
-import { ErrorState } from '../components/ErrorState'
-import { EmptyState } from '../components/EmptyState'
+import { LoadingState, ErrorState, EmptyState } from '../components'
 import { ResultsListPage } from './ResultsListPage'
 
 interface ResultsPanelPageProps {

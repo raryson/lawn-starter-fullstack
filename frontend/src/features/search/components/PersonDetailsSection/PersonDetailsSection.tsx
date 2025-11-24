@@ -1,3 +1,5 @@
+import './PersonDetailsSection.css'
+
 interface PersonDetailsSectionProps {
   properties: {
     birth_year?: string

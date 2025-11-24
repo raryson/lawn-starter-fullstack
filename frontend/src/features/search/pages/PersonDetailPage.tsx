@@ -1,9 +1,7 @@
 import { useParams, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { getPersonDetail, getFilmDetail } from '@/lib/api'
-import { PersonDetailsSection } from '../components/PersonDetailsSection'
-import { PersonMoviesSection } from '../components/PersonMoviesSection'
-import { BackButton } from '../components/BackButton'
+import { PersonDetailsSection, PersonMoviesSection, BackButton } from '../components'
 
 export function PersonDetailPage() {
   const { userId } = useParams({ from: '/people/$userId' })

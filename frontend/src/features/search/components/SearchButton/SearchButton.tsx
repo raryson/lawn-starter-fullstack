@@ -1,3 +1,5 @@
+import './SearchButton.css'
+
 interface SearchButtonProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any
