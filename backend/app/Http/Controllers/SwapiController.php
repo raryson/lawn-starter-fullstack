@@ -34,16 +34,18 @@ class SwapiController extends Controller
         // Generate cache key based on resource and query parameters
         $cacheKey = $this->generateCacheKey($resource, $query);
 
+        $started = microtime(true);
+        
         // Try to get from cache first (24 hours TTL)
         $payload = Cache::remember($cacheKey, now()->addHours(24), function () use ($resource, $query) {
-            $started = microtime(true);
-            $data = $this->client->fetch($resource, $query);
-            $duration = (int) round((microtime(true) - $started) * 1000);
-
-            SwapiQueryPerformed::dispatch($resource, $duration);
-
-            return $data;
+            return $this->client->fetch($resource, $query);
         });
+
+        // Calculate duration (will be 0 or very small for cache hits)
+        $duration = (int) round((microtime(true) - $started) * 1000);
+        
+        // Always dispatch event to count metrics, regardless of cache hit/miss
+        SwapiQueryPerformed::dispatch($resource, $duration);
 
         return response()->json($payload);
     }

@@ -22,16 +22,18 @@ class SwapiDetailController extends Controller
         $cacheKey = $this->generateCacheKey($resource, $id);
 
         try {
+            $started = microtime(true);
+            
             // Try to get from cache first (24 hours TTL)
             $payload = Cache::remember($cacheKey, now()->addHours(24), function () use ($resource, $id) {
-                $started = microtime(true);
-                $data = $this->client->fetchDetail($resource, $id);
-                $duration = (int) round((microtime(true) - $started) * 1000);
-
-                SwapiQueryPerformed::dispatch($resource, $duration);
-
-                return $data;
+                return $this->client->fetchDetail($resource, $id);
             });
+
+            // Calculate duration (will be 0 or very small for cache hits)
+            $duration = (int) round((microtime(true) - $started) * 1000);
+            
+            // Always dispatch event to count metrics, regardless of cache hit/miss
+            SwapiQueryPerformed::dispatch($resource, $duration);
 
             return response()->json($payload);
         } catch (InvalidArgumentException $e) {
