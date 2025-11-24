@@ -1,7 +1,6 @@
 import './SearchInput.css'
 
 interface SearchInputProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any
 }
 
@@ -15,12 +14,10 @@ export function SearchInput({ form }: SearchInputProps) {
 
   return (
     <form.Subscribe selector={(state: any) => [state.values.resource]}>
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       {([resource]: any) => (
         <form.Field
           name="search"
           validators={{
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onChange: ({ value }: any) => {
               if (!value || !value.trim()) {
                 return undefined // Allow empty for now
@@ -29,7 +26,6 @@ export function SearchInput({ form }: SearchInputProps) {
             },
           }}
         >
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {(field: any) => (
             <div>
               <input

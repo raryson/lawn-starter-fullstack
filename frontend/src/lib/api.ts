@@ -44,8 +44,6 @@ export async function searchSwapi(
 
   const data = await response.json()
   
-  // Transform the response to match the expected format
-  // Backend returns { result: [...] } but frontend expects { results: [...] }
   if (data.result && Array.isArray(data.result)) {
     return {
       ...data,
@@ -94,7 +92,6 @@ export async function getPersonDetail(uid: string): Promise<PersonDetail> {
 export interface Film {
   uid: string
   name: string
-  url: string
 }
 
 export interface MovieDetail {

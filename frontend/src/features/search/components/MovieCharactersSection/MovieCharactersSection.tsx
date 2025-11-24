@@ -6,27 +6,33 @@ interface Character {
 }
 
 interface MovieCharactersSectionProps {
-  characters: Character[]
+  characters: Character[] | undefined
+  isLoading?: boolean
   onCharacterClick: (uid: string) => void
 }
 
 export function MovieCharactersSection({
   characters,
+  isLoading = false,
   onCharacterClick,
 }: MovieCharactersSectionProps) {
   return (
-    <div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Characters</h2>
-      {characters.length > 0 ? (
-        <div className="space-y-2">
-          {characters.map((character) => (
-            <button
-              key={character.uid}
-              onClick={() => onCharacterClick(character.uid)}
-              className="text-blue-600 hover:text-blue-800 underline cursor-pointer block text-left w-full"
-            >
-              {character.name}
-            </button>
+    <div className="movie-characters-section">
+      <h2 className="movie-characters-heading font-semibold text-gray-900">Characters</h2>
+      {isLoading ? (
+        <p className="text-gray-500">Loading characters...</p>
+      ) : characters && characters.length > 0 ? (
+        <div className="characters-list">
+          {characters.map((character, index) => (
+            <span key={character.uid}>
+              <button
+                onClick={() => onCharacterClick(character.uid)}
+                className="character-link"
+              >
+                {character.name}
+              </button>
+              {index < characters.length - 1 && <span className="character-separator">, </span>}
+            </span>
           ))}
         </div>
       ) : (

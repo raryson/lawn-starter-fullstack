@@ -43,7 +43,6 @@ export function SearchFormPage({ onSubmit, isLoading = false, defaultResource = 
         <ResourceRadioGroup form={form} />
         <SearchInput form={form} />
         <form.Subscribe selector={(state: any) => [state.values.search]}>
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {([searchValue]: any) => {
             const isSearchEmpty = !searchValue || !searchValue.trim()
             return (

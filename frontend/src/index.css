@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  /* Brand Colors - Global CSS Variables */
   --white: #fff;
   --green-teal: #0ab463;
   --azure: #0094ff;
@@ -12,11 +11,32 @@
   --gray22: #383838;
   --black: #000;
   --warm-grey-75: rgba(158, 158, 158, 0.75);
+  --background-gray: #ededed;
 }
 
 @layer base {
   body {
     font-family: 'Montserrat', sans-serif;
   }
-}
 
+  /* Global typography styles */
+  h1 {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  span {
+    font-weight: normal;
+    font-size: 14px;
+  }
+}

@@ -1,14 +1,12 @@
 import './ResourceRadioGroup.css'
 
 interface ResourceRadioGroupProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any
 }
 
 export function ResourceRadioGroup({ form }: ResourceRadioGroupProps) {
   return (
     <form.Field name="resource">
-      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
       {(field: any) => (
         <div className="radio-group">
           <div className="radio-container">

@@ -3,10 +3,11 @@ import { useNavigate } from '@tanstack/react-router'
 import { type Film } from '@/lib/api'
 
 interface PersonMoviesSectionProps {
-  films: Film[]
+  films: Film[] | undefined
+  isLoading?: boolean
 }
 
-export function PersonMoviesSection({ films }: PersonMoviesSectionProps) {
+export function PersonMoviesSection({ films, isLoading = false }: PersonMoviesSectionProps) {
   const navigate = useNavigate()
 
   const handleMovieClick = (movieId: string) => {
@@ -14,18 +15,22 @@ export function PersonMoviesSection({ films }: PersonMoviesSectionProps) {
   }
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Movies</h2>
-      {films.length > 0 ? (
-        <div className="space-y-2">
-          {films.map((film) => (
-            <button
-              key={film.uid}
-              onClick={() => handleMovieClick(film.uid)}
-              className="text-blue-600 hover:text-blue-800 underline cursor-pointer block text-left"
-            >
-              {film.name}
-            </button>
+    <div className="person-movies-section">
+      <h2 className="person-movies-heading font-semibold text-gray-900 mb-4">Movies</h2>
+      {isLoading ? (
+        <p className="text-gray-500">Loading movies...</p>
+      ) : films && films.length > 0 ? (
+        <div className="movies-list">
+          {films.map((film, index) => (
+            <span key={film.uid}>
+              <button
+                onClick={() => handleMovieClick(film.uid)}
+                className="movie-link"
+              >
+                {film.name}
+              </button>
+              {index < films.length - 1 && <span className="movie-separator">, </span>}
+            </span>
           ))}
         </div>
       ) : (

@@ -1,2 +1,7 @@
-/* OpeningCrawlSection component styles */
+.opening-crawl-heading {
+  font-size: 16px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--pinkish-grey);
+  padding-bottom: 16px;
+}
 

@@ -1,8 +1,10 @@
+import './MovieDetailPage.css'
 import { useParams, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { getMovieDetail, getPersonDetail } from '@/lib/api'
 import { OpeningCrawlSection, MovieCharactersSection } from '../components'
 import { Button } from '@/lib/components/Button'
+import { Card } from '@/lib/components/Card'
 
 export function MovieDetailPage() {
   const { movieId } = useParams({ from: '/movies/$movieId' })
@@ -13,7 +15,6 @@ export function MovieDetailPage() {
     queryFn: () => getMovieDetail(movieId),
   })
 
-  // Extract character IDs from character URLs
   const characterUrls = movie?.result?.properties?.characters || []
   const characterIds = characterUrls
     .map((url: string) => {
@@ -22,8 +23,7 @@ export function MovieDetailPage() {
     })
     .filter((id): id is string => id !== null)
 
-  // Fetch character details
-  const { data: characters } = useQuery({
+  const { data: characters, isLoading: isLoadingCharacters } = useQuery({
     queryKey: ['movie-characters', characterIds],
     queryFn: async () => {
       const characterPromises = characterIds.map((id) => getPersonDetail(id))
@@ -61,17 +61,18 @@ export function MovieDetailPage() {
   const openingCrawl = movie.result.properties.opening_crawl || ''
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className="min-h-screen py-8" style={{ backgroundColor: 'var(--background-gray)' }}>
       <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-white rounded-lg shadow-sm p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+        <Card>
+          <h1 className="movie-title font-bold text-gray-900">
             {movie.result.properties.title}
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-32 gap-y-0 mb-8">
             <OpeningCrawlSection openingCrawl={openingCrawl} />
             <MovieCharactersSection
-              characters={characters || []}
+              characters={characters}
+              isLoading={isLoadingCharacters}
               onCharacterClick={(uid) => {
                 navigate({ to: '/people/$userId', params: { userId: uid } })
               }}
@@ -81,7 +82,7 @@ export function MovieDetailPage() {
           <Button onClick={() => navigate({ to: '/' })} className="w-auto">
             BACK TO SEARCH
           </Button>
-        </div>
+        </Card>
       </div>
     </div>
   )

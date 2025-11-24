@@ -1,2 +1,36 @@
-/* PersonMoviesSection component styles */
+.person-movies-heading {
+  font-size: 16px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--pinkish-grey);
+  padding-bottom: 16px;
+}
+
+.person-movies-section p {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.movies-list {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.movie-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--azure);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.movie-link:hover {
+  color: #0073cc;
+}
+
+.movie-separator {
+  color: var(--gray22);
+}
 

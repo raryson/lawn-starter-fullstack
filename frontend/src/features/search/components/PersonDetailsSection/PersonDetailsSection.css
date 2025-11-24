@@ -1,2 +1,31 @@
-/* PersonDetailsSection component styles */
+.person-details-section {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  padding-right: 0;
+}
 
+.person-details-heading {
+  font-size: 16px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--pinkish-grey);
+  padding-bottom: 16px;
+}
+
+.detail-row {
+  display: flex;
+  gap: 8px;
+}
+
+.detail-label {
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+.detail-value {
+  flex: 1;
+  font-size: 14px;
+}
+
+.person-details-section > div:last-child {
+  margin-bottom: 0;
+}

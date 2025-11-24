@@ -26,7 +26,7 @@ export function ResultsPanelPage({
 
   return (
     <Card className="h-[calc(100vh-12rem)] flex flex-col">
-      <h2 className="results-heading text-lg font-semibold text-gray-900 mb-6 flex-shrink-0">Results</h2>
+      <h2 className="results-heading font-semibold text-gray-900 flex-shrink-0">Results</h2>
 
       <div className="flex-1 overflow-y-auto min-h-0">
         {isLoading && <LoadingState />}

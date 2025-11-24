@@ -1,4 +1,3 @@
-import './ResultCard.css'
 import { useNavigate } from '@tanstack/react-router'
 import { type SwapiResult } from '@/lib/api'
 import { Button } from '@/lib/components/Button'
@@ -12,7 +11,12 @@ export function ResultCard({ result }: ResultCardProps) {
   const name = result.name || result.title || 'Unknown'
 
   const handleSeeDetails = () => {
-    navigate({ to: '/people/$userId', params: { userId: result.uid } })
+    // If result has a title, it's a movie, otherwise it's a person
+    if (result.title) {
+      navigate({ to: '/movies/$movieId', params: { movieId: result.uid } })
+    } else {
+      navigate({ to: '/people/$userId', params: { userId: result.uid } })
+    }
   }
 
   return (

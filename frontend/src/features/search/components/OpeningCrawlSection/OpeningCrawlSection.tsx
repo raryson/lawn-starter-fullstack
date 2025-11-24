@@ -5,14 +5,13 @@ interface OpeningCrawlSectionProps {
 }
 
 export function OpeningCrawlSection({ openingCrawl }: OpeningCrawlSectionProps) {
-  // Split opening crawl into paragraphs (usually separated by double newlines)
   const paragraphs = openingCrawl
     .split(/\n\n+/)
     .filter((p) => p.trim().length > 0)
 
   return (
     <div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Opening Crawl</h2>
+      <h2 className="opening-crawl-heading font-semibold text-gray-900">Opening Crawl</h2>
       <div className="space-y-4">
         {paragraphs.length > 0 ? (
           paragraphs.map((paragraph, index) => (

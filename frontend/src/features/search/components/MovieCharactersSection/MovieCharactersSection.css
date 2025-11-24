@@ -1,2 +1,37 @@
 /* MovieCharactersSection component styles */
+.movie-characters-heading {
+  font-size: 16px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--pinkish-grey);
+  padding-bottom: 16px;
+}
+
+.movie-characters-section p {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.characters-list {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.character-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--azure);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.character-link:hover {
+  color: #0073cc;
+}
+
+.character-separator {
+  color: var(--gray22);
+}
 

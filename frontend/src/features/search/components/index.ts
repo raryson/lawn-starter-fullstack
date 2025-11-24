@@ -1,4 +1,3 @@
-// Standalone components that don't integrate with other components
 export { ResourceRadioGroup } from './ResourceRadioGroup/ResourceRadioGroup'
 export { SearchInput } from './SearchInput/SearchInput'
 export { LoadingState } from './LoadingState/LoadingState'
