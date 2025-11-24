@@ -1,0 +1,6 @@
+.results-heading {
+  font-weight: bold;
+  border-bottom: 1px solid var(--gainsboro);
+  padding-bottom: 16px;
+}
+

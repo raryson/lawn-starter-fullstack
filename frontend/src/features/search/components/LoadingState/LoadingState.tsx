@@ -3,7 +3,7 @@ import './LoadingState.css'
 export function LoadingState() {
   return (
     <div className="flex items-center justify-center h-full">
-      <p className="text-gray-500">Loading...</p>
+      <p className="loading-state text-gray-500">Searching...</p>
     </div>
   )
 }

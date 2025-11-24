@@ -2,6 +2,7 @@ import { useForm } from '@tanstack/react-form'
 import { type SwapiResource } from '@/lib/api'
 import { ResourceRadioGroup, SearchInput } from '../components'
 import { Button } from '@/lib/components/Button'
+import { Card } from '@/lib/components/Card'
 
 interface SearchFormPageProps {
   onSubmit: (values: { resource: SwapiResource; search: string }) => void
@@ -26,7 +27,7 @@ export function SearchFormPage({ onSubmit, isLoading = false, defaultResource = 
   })
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <Card className="self-start">
       <h2 className="text-lg font-medium text-gray-900 mb-6">
         What are you searching for?
       </h2>
@@ -53,7 +54,7 @@ export function SearchFormPage({ onSubmit, isLoading = false, defaultResource = 
           }}
         </form.Subscribe>
       </form>
-    </div>
+    </Card>
   )
 }
 

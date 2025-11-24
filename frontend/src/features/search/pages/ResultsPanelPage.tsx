@@ -1,6 +1,8 @@
+import './ResultsPanelPage.css'
 import { type SwapiResponse } from '@/lib/api'
 import { LoadingState, ErrorState, EmptyState } from '../components'
 import { ResultsListPage } from './ResultsListPage'
+import { Card } from '@/lib/components/Card'
 
 interface ResultsPanelPageProps {
   isLoading: boolean
@@ -23,17 +25,17 @@ export function ResultsPanelPage({
     (!data || !data.results || data.results.length === 0)
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-6">Results</h2>
+    <Card className="h-[calc(100vh-12rem)] flex flex-col">
+      <h2 className="results-heading text-lg font-semibold text-gray-900 mb-6 flex-shrink-0">Results</h2>
 
-      <div className="min-h-[200px]">
+      <div className="flex-1 overflow-y-auto min-h-0">
         {isLoading && <LoadingState />}
         {error && <ErrorState error={error} />}
         {!hasSearched && !isLoading && <EmptyState />}
         {hasNoResults && <EmptyState />}
         {hasResults && data && <ResultsListPage data={data} />}
       </div>
-    </div>
+    </Card>
   )
 }
 

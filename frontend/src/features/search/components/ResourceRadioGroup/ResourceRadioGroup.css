@@ -1,2 +1,52 @@
 /* ResourceRadioGroup component styles */
+.radio-group {
+  cursor: pointer;
+}
+
+.radio-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.radio-label {
+  cursor: pointer;
+  vertical-align: middle;
+  margin-right: 30px;
+}
+
+.radio-input {
+  vertical-align: middle;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid var(--pinkish-grey);
+  border-radius: 50%;
+  transition: all 0.1s ease-in-out;
+  position: relative;
+}
+
+.radio-input::after {
+  content: '';
+  display: block;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.radio-input:checked::after {
+  background-color: var(--white);
+  border: 8px solid var(--azure);
+}
+
+.radio-input:hover::after {
+  background-color: var(--white);
+  border: 8px solid var(--azure);
+}
 
