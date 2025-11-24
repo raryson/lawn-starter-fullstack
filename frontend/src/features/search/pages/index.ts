@@ -1,0 +1,6 @@
+export { SearchPage } from './SearchPage'
+export { SearchFormPage } from './SearchFormPage'
+export { ResultsPanelPage } from './ResultsPanelPage'
+export { ResultsListPage } from './ResultsListPage'
+export { PersonDetailPage } from './PersonDetailPage'
+export { MovieDetailPage } from './MovieDetailPage'
