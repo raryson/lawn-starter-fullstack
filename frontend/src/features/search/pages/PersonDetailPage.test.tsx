@@ -3,7 +3,6 @@ import { render, screen, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { routeTree } from '@/routeTree.gen'
-import type { FileRouteTypes } from '@/routeTree.gen'
 import * as api from '@/lib/api'
 
 // Mock the API functions
@@ -22,7 +21,7 @@ const createQueryClient = () => {
   })
 }
 
-const createTestRouter = (initialRoute: FileRouteTypes['fullPaths'] = '/people/1') => {
+const createTestRouter = (userId: string = '1') => {
   const router = createRouter({
     routeTree,
     defaultPreload: 'intent',
@@ -30,7 +29,7 @@ const createTestRouter = (initialRoute: FileRouteTypes['fullPaths'] = '/people/1
   })
 
   // Navigate to the initial route (don't await - router will handle it)
-  router.navigate({ to: initialRoute }).catch(() => {
+  router.navigate({ to: '/people/$userId', params: { userId } }).catch(() => {
     // Ignore navigation errors in tests
   })
 
@@ -47,7 +46,7 @@ describe('PersonDetailPage', () => {
       () => new Promise(() => {}) // Never resolves
     )
 
-    const router = createTestRouter('/people/1')
+    const router = createTestRouter('1')
     const queryClient = createQueryClient()
     render(
       <QueryClientProvider client={queryClient}>
@@ -91,7 +90,7 @@ describe('PersonDetailPage', () => {
     vi.mocked(api.getPersonDetail).mockResolvedValue(mockPerson)
     vi.mocked(api.getFilmDetail).mockResolvedValue(mockFilm)
 
-    const router = createTestRouter('/people/1')
+    const router = createTestRouter('1')
     const queryClient = createQueryClient()
     render(
       <QueryClientProvider client={queryClient}>
@@ -114,7 +113,7 @@ describe('PersonDetailPage', () => {
     const error = new Error('Failed to fetch')
     vi.mocked(api.getPersonDetail).mockRejectedValue(error)
 
-    const router = createTestRouter('/people/1')
+    const router = createTestRouter('1')
     const queryClient = createQueryClient()
     render(
       <QueryClientProvider client={queryClient}>
@@ -150,7 +149,7 @@ describe('PersonDetailPage', () => {
 
     vi.mocked(api.getPersonDetail).mockResolvedValue(mockPerson)
 
-    const router = createTestRouter('/people/2')
+    const router = createTestRouter('2')
     const queryClient = createQueryClient()
     render(
       <QueryClientProvider client={queryClient}>
@@ -186,7 +185,7 @@ describe('PersonDetailPage', () => {
 
     vi.mocked(api.getPersonDetail).mockResolvedValue(mockPerson)
 
-    const router = createTestRouter('/people/1')
+    const router = createTestRouter('1')
     const queryClient = createQueryClient()
     render(
       <QueryClientProvider client={queryClient}>
@@ -241,7 +240,7 @@ describe('PersonDetailPage', () => {
       .mockResolvedValueOnce(mockFilm1)
       .mockResolvedValueOnce(mockFilm2)
 
-    const router = createTestRouter('/people/1')
+    const router = createTestRouter('1')
     const queryClient = createQueryClient()
     render(
       <QueryClientProvider client={queryClient}>

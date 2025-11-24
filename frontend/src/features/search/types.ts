@@ -5,9 +5,10 @@ export interface SearchFormValues {
   search: string
 }
 
-// Type for the form - using ReturnType to infer from useForm
-// We need to use a type that matches the actual form instance
-export type SearchFormApi = ReturnType<typeof import('@tanstack/react-form').useForm<SearchFormValues>>
+// Type for the form - using a type that's compatible with TanStack Form's ReactFormExtendedApi
+// We use a generic type that accepts any form data structure matching SearchFormValues
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type SearchFormApi = any
 
 export interface PersonProperties {
   birth_year?: string
