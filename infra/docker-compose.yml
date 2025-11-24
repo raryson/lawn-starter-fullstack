@@ -73,6 +73,17 @@ services:
       - ../backend:/var/www/html
     environment: *backend-env
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    container_name: lawn_swagger_ui
+    ports:
+      - "8080:8080"
+    environment:
+      SWAGGER_JSON: /docs/openapi.yaml
+    volumes:
+      - ../backend/docs:/docs
+    restart: unless-stopped
+
 volumes:
   db_data:
 

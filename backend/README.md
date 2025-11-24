@@ -62,6 +62,7 @@ docker compose exec backend-app php artisan migrate --force
 The Compose services expose:
 
 - Backend HTTP API at http://localhost:8000
+- Swagger UI at http://localhost:8080
 - MySQL on localhost:3306 (credentials match the ones set in the compose file)
 
 Stop everything with `docker compose down` (add `-v` to wipe the MySQL volume).
@@ -128,7 +129,9 @@ Responses are identical to the upstream SWAPI payloads (opaque proxy).
 
 ## Swagger / OpenAPI
 
-The OpenAPI contract lives at `docs/openapi.yaml`. Preview it locally with Swagger UI or Redoc:
+The OpenAPI contract lives at `docs/openapi.yaml`. Swagger UI is automatically started with `docker compose up` and is available at **http://localhost:8080**.
+
+If you're not using docker-compose, you can run Swagger UI manually:
 
 ```bash
 # Swagger UI via Docker
@@ -140,8 +143,6 @@ docker run --rm -p 8080:8080 \
 # OR Redoc via npx (requires Node >=18)
 npx @redocly/cli preview-docs docs/openapi.yaml
 ```
-
-Once the viewer is running, open http://localhost:8080/ (Swagger UI) or the URL printed by Redoc.
 
 ---
 
