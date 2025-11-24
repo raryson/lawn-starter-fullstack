@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { getPersonDetail, getFilmDetail } from '@/lib/api'
-import { PersonDetailsSection, PersonMoviesSection, BackButton } from '../components'
+import { PersonDetailsSection, PersonMoviesSection } from '../components'
+import { Button } from '@/lib/components/Button'
 
 export function PersonDetailPage() {
   const { userId } = useParams({ from: '/people/$userId' })
@@ -70,7 +71,9 @@ export function PersonDetailPage() {
             <PersonMoviesSection films={films || []} />
           </div>
 
-          <BackButton onClick={() => navigate({ to: '/' })} />
+          <Button onClick={() => navigate({ to: '/' })} className="w-auto">
+            BACK TO SEARCH
+          </Button>
         </div>
       </div>
     </div>

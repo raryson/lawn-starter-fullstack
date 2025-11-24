@@ -12,6 +12,8 @@
 
 - Use functional components with hooks; avoid legacy class components.
 - Organize code by feature (`frontend/src/features/<feature>/components|hooks|api`), keeping shared utilities in `frontend/src/lib`.
+- **Component Structure**: Each component must have its own folder with component-specific CSS. Structure: `ComponentName/ComponentName.tsx` and `ComponentName/ComponentName.css`. Never add component-specific styles to `index.css` - only global styles (like font-family, CSS variables) belong there.
+- **Tailwind Configuration**: Always use custom spacing, color, and utility tokens defined in `tailwind.config.js` instead of arbitrary values. For example, use `my-input-margin-y` instead of `my-[10px]`, or `border-xs` instead of `border-[0.5px]`. All design tokens must be defined in the Tailwind config's `theme.extend` section to ensure consistency across the app. Avoid hardcoding values in component classes - if a spacing/color/value is needed, add it to the config first.
 - Centralize server access inside typed API clients (e.g., `fetch` wrappers or React Query) and never call `fetch` directly from view components.
 - Keep components presentational whenever possible; move complex logic into hooks or utility modules.
 - Favor CSS Modules or CSS-in-JS with theme tokens—no global CSS overrides without explaining the need.

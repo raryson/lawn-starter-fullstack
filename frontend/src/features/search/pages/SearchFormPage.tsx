@@ -1,13 +1,15 @@
 import { useForm } from '@tanstack/react-form'
 import { type SwapiResource } from '@/lib/api'
-import { ResourceRadioGroup, SearchInput, SearchButton } from '../components'
+import { ResourceRadioGroup, SearchInput } from '../components'
+import { Button } from '@/lib/components/Button'
 
 interface SearchFormPageProps {
   onSubmit: (values: { resource: SwapiResource; search: string }) => void
+  isLoading?: boolean
   defaultResource?: SwapiResource
 }
 
-export function SearchFormPage({ onSubmit, defaultResource = 'people' }: SearchFormPageProps) {
+export function SearchFormPage({ onSubmit, isLoading = false, defaultResource = 'people' }: SearchFormPageProps) {
   const form = useForm({
     defaultValues: {
       resource: defaultResource,
@@ -39,7 +41,17 @@ export function SearchFormPage({ onSubmit, defaultResource = 'people' }: SearchF
       >
         <ResourceRadioGroup form={form} />
         <SearchInput form={form} />
-        <SearchButton form={form} />
+        <form.Subscribe selector={(state: any) => [state.values.search]}>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {([searchValue]: any) => {
+            const isSearchEmpty = !searchValue || !searchValue.trim()
+            return (
+              <Button type="submit" disabled={isLoading || isSearchEmpty}>
+                {isLoading ? 'SEARCHING...' : 'SEARCH'}
+              </Button>
+            )
+          }}
+        </form.Subscribe>
       </form>
     </div>
   )

@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { getMovieDetail, getPersonDetail } from '@/lib/api'
-import { OpeningCrawlSection, MovieCharactersSection, BackButton } from '../components'
+import { OpeningCrawlSection, MovieCharactersSection } from '../components'
+import { Button } from '@/lib/components/Button'
 
 export function MovieDetailPage() {
   const { movieId } = useParams({ from: '/movies/$movieId' })
@@ -77,7 +78,9 @@ export function MovieDetailPage() {
             />
           </div>
 
-          <BackButton onClick={() => navigate({ to: '/' })} />
+          <Button onClick={() => navigate({ to: '/' })} className="w-auto">
+            BACK TO SEARCH
+          </Button>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ export function SearchPage() {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SearchFormPage onSubmit={handleSearch} />
+        <SearchFormPage onSubmit={handleSearch} isLoading={isLoading} />
         <ResultsPanelPage
           isLoading={isLoading}
           error={error}
