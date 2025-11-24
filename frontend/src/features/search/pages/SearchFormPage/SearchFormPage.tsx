@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form'
 import { type SwapiResource } from '@/lib/api'
-import { ResourceRadioGroup, SearchInput } from '../components'
+import { ResourceRadioGroup, SearchInput } from '../../components'
 import { Button } from '@/lib/components/Button'
 import { Card } from '@/lib/components/Card'
 

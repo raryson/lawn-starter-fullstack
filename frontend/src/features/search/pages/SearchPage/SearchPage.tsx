@@ -1,6 +1,6 @@
-import { SearchFormPage } from './SearchFormPage'
-import { ResultsPanelPage } from './ResultsPanelPage'
-import { useSwapiSearch } from '../hooks/useSwapiSearch'
+import { SearchFormPage } from '../SearchFormPage/SearchFormPage'
+import { ResultsPanelPage } from '../ResultsPanelPage/ResultsPanelPage'
+import { useSwapiSearch } from '../../hooks/useSwapiSearch'
 
 export function SearchPage() {
   const { data, isLoading, error, hasSearched, handleSearch } = useSwapiSearch()

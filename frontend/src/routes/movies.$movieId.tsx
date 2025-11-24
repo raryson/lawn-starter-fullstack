@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { MovieDetailPage } from '@/features/search/pages/MovieDetailPage'
+import { MovieDetailPage } from '@/features/search/pages/MovieDetailPage/MovieDetailPage'
 
 export const Route = createFileRoute('/movies/$movieId')({
   component: MovieDetailPage,

@@ -1,5 +1,5 @@
 import { type SwapiResponse, type SwapiResult } from '@/lib/api'
-import { ResultCard } from '../components'
+import { ResultCard } from '../../components'
 
 interface ResultsListPageProps {
   data: SwapiResponse

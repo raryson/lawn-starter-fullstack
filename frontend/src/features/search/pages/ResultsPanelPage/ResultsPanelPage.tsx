@@ -1,7 +1,7 @@
 import './ResultsPanelPage.css'
 import { type SwapiResponse } from '@/lib/api'
-import { LoadingState, ErrorState, EmptyState } from '../components'
-import { ResultsListPage } from './ResultsListPage'
+import { LoadingState, ErrorState, EmptyState } from '../../components'
+import { ResultsListPage } from '../ResultsListPage/ResultsListPage'
 import { Card } from '@/lib/components/Card'
 
 interface ResultsPanelPageProps {

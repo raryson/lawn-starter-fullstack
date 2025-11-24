@@ -2,7 +2,7 @@ import './MovieDetailPage.css'
 import { useParams, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { getMovieDetail, getPersonDetail } from '@/lib/api'
-import { OpeningCrawlSection, MovieCharactersSection } from '../components'
+import { OpeningCrawlSection, MovieCharactersSection } from '../../components'
 import { Button } from '@/lib/components/Button'
 import { Card } from '@/lib/components/Card'
 
@@ -73,7 +73,7 @@ export function MovieDetailPage() {
             <MovieCharactersSection
               characters={characters}
               isLoading={isLoadingCharacters}
-              onCharacterClick={(uid) => {
+              onCharacterClick={(uid: string) => {
                 navigate({ to: '/people/$userId', params: { userId: uid } })
               }}
             />

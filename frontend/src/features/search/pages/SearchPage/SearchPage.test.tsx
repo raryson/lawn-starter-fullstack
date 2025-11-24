@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { SearchPage } from './SearchPage'
-import * as useSwapiSearchHook from '../hooks/useSwapiSearch'
+import * as useSwapiSearchHook from '../../hooks/useSwapiSearch'
 
 // Mock the hook
-vi.mock('../hooks/useSwapiSearch', () => ({
+vi.mock('../../hooks/useSwapiSearch', () => ({
   useSwapiSearch: vi.fn(),
 }))
 
