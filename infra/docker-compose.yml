@@ -34,8 +34,7 @@ services:
 
   backend-app:
     build:
-      context: .
-      dockerfile: php/Dockerfile
+      context: ../backend
     image: lawn-backend-php:8.5
     container_name: lawn_backend_app
     working_dir: /var/www/html
@@ -82,6 +81,15 @@ services:
       SWAGGER_JSON: /docs/openapi.yaml
     volumes:
       - ../backend/docs:/docs
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../frontend
+    image: lawn-frontend:latest
+    container_name: lawn_frontend
+    ports:
+      - "3000:80"
     restart: unless-stopped
 
 volumes:

@@ -1,5 +1,7 @@
 ## Lawn Starter Backend
 
+> **📖 Full Project Documentation**: See the [Root README](../README.md) for Docker Compose setup, project overview, and architecture details.
+
 Backend-only Laravel 10 service that:
 
 - Proxies the [swapi.tech](https://swapi.tech) resources listed below.

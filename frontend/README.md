@@ -1,5 +1,7 @@
 # Lawn Starter Frontend
 
+> **📖 Full Project Documentation**: See the [Root README](../README.md) for Docker Compose setup, project overview, and architecture details.
+
 A modern React application built with TypeScript, featuring a feature-based architecture and type-safe routing. This frontend application provides a search interface for Star Wars API (SWAPI) data, allowing users to search for people and films with detailed views.
 
 ## 🚀 Tech Stack
