@@ -369,25 +369,6 @@ Global CSS variables are defined in `index.css`:
 - [Tailwind CSS Docs](https://tailwindcss.com)
 - [Vitest Docs](https://vitest.dev)
 
-## 🤝 Contributing
-
-### Code Style
-
-- Use functional components with hooks
-- Prefer TypeScript over JavaScript
-- Follow the component structure pattern
-- Write tests for new components
-- Run linter before committing
-
-### Best Practices
-
-1. **Keep components presentational** - Move logic to hooks
-2. **Centralize API calls** - Use `src/lib/api.ts`
-3. **Type everything** - Avoid `any` types
-4. **Test components** - Write tests for new features
-5. **Use design tokens** - Don't hardcode values
-6. **Co-locate files** - Keep related files together
-
 ## 📝 Notes
 
 - The route tree (`routeTree.gen.ts`) is auto-generated - do not edit manually
