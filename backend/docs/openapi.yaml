@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  title: Lawn Starter SWAPI Proxy
+  version: 1.0.0
+  description: >
+    Backend-only Laravel service that proxies Star Wars API (swapi.tech) data
+    and exposes rolling metrics that are recomputed every 5 minutes via the
+    event/queue pipeline.
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+paths:
+  /api/swapi:
+    get:
+      summary: Fetch data from a Star Wars resource
+      description: >
+        Proxies the request to the configured SWAPI endpoint. Arbitrary query
+        parameters are forwarded as-is to swapi.tech.
+      parameters:
+        - name: resource
+          in: query
+          description: >
+            SWAPI collection to query. Defaults to `people` when omitted.
+          schema:
+            type: string
+            enum: [films, people, planets, species, starships, vehicles]
+        - name: search
+          in: query
+          description: Optional search string forwarded to swapi.tech.
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Optional page to request from swapi.tech.
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        "200":
+          description: JSON payload returned by swapi.tech
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SwapiProxyResponse"
+        "400":
+          description: Invalid resource requested
+        "502":
+          description: Upstream SWAPI error
+  /api/swapi/stats:
+    get:
+      summary: Retrieve cached statistics about SWAPI usage
+      description: >
+        Returns metrics that are recomputed every five minutes by a queued job.
+      responses:
+        "200":
+          description: Statistics payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SwapiStatsResponse"
+components:
+  schemas:
+    SwapiProxyResponse:
+      type: object
+      description: Opaque SWAPI payload. The structure varies per resource.
+      additionalProperties: true
+    SwapiStatsResponse:
+      type: object
+      properties:
+        computed_at:
+          type: string
+          format: date-time
+          nullable: true
+        metrics:
+          type: object
+          required:
+            - total_queries
+            - top_resources
+            - average_duration_ms
+            - popular_hour
+          properties:
+            total_queries:
+              type: integer
+              minimum: 0
+            top_resources:
+              type: array
+              items:
+                type: object
+                properties:
+                  resource:
+                    type: string
+                  count:
+                    type: integer
+                  percentage:
+                    type: number
+                    format: float
+                required: [resource, count, percentage]
+            average_duration_ms:
+              type: number
+              format: float
+              minimum: 0
+            popular_hour:
+              type: string
+              description: >
+                24-hour clock bucket (00-23) that saw the highest number of requests.
+              nullable: true
+

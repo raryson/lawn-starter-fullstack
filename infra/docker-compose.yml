@@ -1,0 +1,78 @@
+version: "3.9"
+
+x-backend-env: &backend-env
+  APP_ENV: local
+  APP_DEBUG: "true"
+  APP_URL: http://localhost:8000
+  DB_CONNECTION: mysql
+  DB_HOST: db
+  DB_PORT: 3306
+  DB_DATABASE: lawn
+  DB_USERNAME: lawn
+  DB_PASSWORD: lawn
+  QUEUE_CONNECTION: database
+
+services:
+  db:
+    image: mysql:8.2
+    container_name: lawn_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: lawn
+      MYSQL_USER: lawn
+      MYSQL_PASSWORD: lawn
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend-app:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    image: lawn-backend-php:8.5
+    container_name: lawn_backend_app
+    working_dir: /var/www/html
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    volumes:
+      - ../backend:/var/www/html
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *backend-env
+
+  backend-queue:
+    image: lawn-backend-php:8.5
+    container_name: lawn_backend_queue
+    working_dir: /var/www/html
+    command: php artisan queue:work database --verbose --tries=3 --timeout=90
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../backend:/var/www/html
+    environment: *backend-env
+
+  backend-scheduler:
+    image: lawn-backend-php:8.5
+    container_name: lawn_backend_scheduler
+    working_dir: /var/www/html
+    command: php artisan schedule:work
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../backend:/var/www/html
+    environment: *backend-env
+
+volumes:
+  db_data:
+

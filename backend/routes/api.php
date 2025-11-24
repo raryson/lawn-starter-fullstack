@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ExternalDataController;
+use App\Http\Controllers\SwapiController;
+use App\Http\Controllers\SwapiStatsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/external-data', ExternalDataController::class);
+Route::get('/swapi', SwapiController::class);
+Route::get('/swapi/stats', SwapiStatsController::class);

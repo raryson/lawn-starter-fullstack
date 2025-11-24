@@ -1,66 +1,165 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Lawn Starter Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Backend-only Laravel 10 service that:
 
-## About Laravel
+- Proxies the [swapi.tech](https://swapi.tech) resources listed below.
+- Captures latency + resource metrics for every query via events.
+- Recomputes aggregated statistics every five minutes through a queued job triggered by the scheduler.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Everything necessary to operate the backend lives inside this directory.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Quick Start
 
-## Learning Laravel
+```bash
+# Install PHP dependencies inside the Sail PHP 8.2 image (has DOM/XML extensions).
+docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
+  -w /app laravelsail/php82-composer:latest composer install
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Copy environment template and tweak DB / queue credentials as needed.
+cp .env.example .env
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# Generate the application key (or reuse the existing one from .env).
+docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
+  -w /app laravelsail/php82-composer:latest php artisan key:generate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Run migrations (creates swapi tables + database queue tables).
+docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
+  -w /app laravelsail/php82-composer:latest php artisan migrate
 
-## Laravel Sponsors
+# Start the HTTP server, queue worker, and scheduler (separate shells).
+docker run --rm -p 8000:8000 -v /home/raryson/projects/lawn-starter/backend:/app \
+  -w /app laravelsail/php82-composer:latest php artisan serve --host=0.0.0.0 --port=8000
+docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
+  -w /app laravelsail/php82-composer:latest php artisan queue:work database
+docker run --rm -v /home/raryson/projects/lawn-starter/backend:/app \
+  -w /app laravelsail/php82-composer:latest php artisan schedule:work
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Docker Compose Stack
 
-### Premium Partners
+An alternate workflow that bundles the backend, queue worker, scheduler, and MySQL database lives in `infra/docker-compose.yml`. Recommended commands:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+cd /home/raryson/projects/lawn-starter/infra
 
-## Contributing
+# Build the PHP 8.5 image + install dependencies
+docker compose build backend-app
+docker compose run --rm backend-app composer install
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Copy environment & update APP_KEY (only the first time)
+cp ../backend/.env.example ../backend/.env
+docker compose run --rm backend-app php artisan key:generate
 
-## Code of Conduct
+# Bring the stack online (db, app server, queue worker, scheduler)
+docker compose up -d
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Run migrations against the MySQL container
+docker compose exec backend-app php artisan migrate --force
+```
 
-## Security Vulnerabilities
+The Compose services expose:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Backend HTTP API at http://localhost:8000
+- MySQL on localhost:3306 (credentials match the ones set in the compose file)
 
-## License
+Stop everything with `docker compose down` (add `-v` to wipe the MySQL volume).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Key environment variables:
+
+```dotenv
+QUEUE_CONNECTION=database   # queue driver used by metrics pipeline
+SWAPI_TIMEOUT=10            # request timeout in seconds
+DB_CONNECTION=sqlite        # default for local development
+```
+
+---
+
+## Request Flow & Metrics Pipeline
+
+1. `GET /api/swapi` validates the requested resource and proxies the call to the mapped SWAPI endpoint.
+2. The controller measures request duration and dispatches `SwapiQueryPerformed`.
+3. `PersistSwapiQuery` listens to the event and stores the resource + duration in `swapi_queries`.
+4. The scheduler dispatches `SwapiStatsRecomputeRequested` every five minutes.
+5. `DispatchSwapiStatsComputation` reacts by queueing `ComputeSwapiStats`.
+6. `ComputeSwapiStats` aggregates totals, top five resources, average duration, and the most active hour.
+7. The resulting snapshot lives in `swapi_stats` and is served by `GET /api/swapi/stats`.
+
+Events & listeners are registered in `App\Providers\EventServiceProvider`. The queue worker **must** be running; otherwise query metrics and stats recomputations will back up in the `jobs` table.
+
+---
+
+## REST Endpoints
+
+| Method | Path             | Description                                                                                             |
+|--------|------------------|---------------------------------------------------------------------------------------------------------|
+| GET    | `/api/swapi`     | Proxies one of the allowed SWAPI resources. Supports the standard SWAPI query params (`search`, `page`). |
+| GET    | `/api/swapi/stats` | Returns the most recently computed metrics snapshot (recomputed every five minutes).                    |
+
+### `/api/swapi` query parameters
+
+| Name     | Type   | Required | Notes                                                                 |
+|----------|--------|----------|-----------------------------------------------------------------------|
+| resource | string | no       | Defaults to `people`. Must be one of `films`, `people`, `planets`, `species`, `starships`, `vehicles`. |
+| search   | string | no       | Forwarded untouched to swapi.tech.                                    |
+| page     | int    | no       | Forwarded untouched to swapi.tech.                                    |
+| ...      | any    | no       | Any additional key/value pair is forwarded to swapi.tech.             |
+
+Responses are identical to the upstream SWAPI payloads (opaque proxy).
+
+### `/api/swapi/stats` response shape
+
+```json
+{
+  "computed_at": "2025-11-24T14:25:00Z",
+  "metrics": {
+    "total_queries": 42,
+    "top_resources": [
+      { "resource": "people", "count": 20, "percentage": 47.62 }
+    ],
+    "average_duration_ms": 112.4,
+    "popular_hour": "14"
+  }
+}
+```
+
+---
+
+## Swagger / OpenAPI
+
+The OpenAPI contract lives at `docs/openapi.yaml`. Preview it locally with Swagger UI or Redoc:
+
+```bash
+# Swagger UI via Docker
+docker run --rm -p 8080:8080 \
+  -e SWAGGER_JSON=/docs/openapi.yaml \
+  -v /home/raryson/projects/lawn-starter/backend/docs:/docs \
+  swaggerapi/swagger-ui
+
+# OR Redoc via npx (requires Node >=18)
+npx @redocly/cli preview-docs docs/openapi.yaml
+```
+
+Once the viewer is running, open http://localhost:8080/ (Swagger UI) or the URL printed by Redoc.
+
+---
+
+## Testing
+
+Execute the full PHPUnit suite (runs feature tests for both endpoints + stats job):
+
+```bash
+docker run --rm -e QUEUE_CONNECTION=sync \
+  -v /home/raryson/projects/lawn-starter/backend:/app \
+  -w /app laravelsail/php82-composer:latest php artisan test
+```
+
+---
+
+## Operational Notes
+
+- This repo is backend-only; no Vite/Blade assets remain.
+- The `database` queue driver uses the `jobs` table created by the migrations; rotate or clean it like any other queue-backed service.
+- Metrics freshness depends on both the scheduler and queue worker. If stats fall behind, check `jobs` for stuck `ComputeSwapiStats` jobs.
+- To reset metrics, truncate `swapi_queries` and `swapi_stats`, then either wait for the next scheduled recomputation or dispatch `SwapiStatsRecomputeRequested` manually via `php artisan tinker`.
