@@ -47,7 +47,7 @@ export async function searchSwapi(
   if (data.result && Array.isArray(data.result)) {
     return {
       ...data,
-      results: data.result.map((item: any) => ({
+      results: data.result.map((item: { uid: string; properties?: { name?: string; title?: string; url?: string }; url?: string }) => ({
         uid: item.uid,
         name: item.properties?.name,
         title: item.properties?.title,
@@ -71,7 +71,7 @@ export interface PersonDetail {
       height: string
       mass: string
       films?: string[]
-      [key: string]: any
+      [key: string]: string | string[] | undefined
     }
     description: string
     uid: string
@@ -101,7 +101,7 @@ export interface MovieDetail {
       title: string
       opening_crawl: string
       characters?: string[]
-      [key: string]: any
+      [key: string]: string | string[] | undefined
     }
     description: string
     uid: string

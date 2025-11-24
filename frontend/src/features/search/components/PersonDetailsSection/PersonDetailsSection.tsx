@@ -1,15 +1,8 @@
 import './PersonDetailsSection.css'
+import { type PersonProperties } from '../../types'
 
 interface PersonDetailsSectionProps {
-  properties: {
-    birth_year?: string
-    gender?: string
-    eye_color?: string
-    hair_color?: string
-    height?: string
-    mass?: string
-    [key: string]: any
-  }
+  properties: PersonProperties
 }
 
 export function PersonDetailsSection({ properties }: PersonDetailsSectionProps) {

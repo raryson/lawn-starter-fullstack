@@ -42,9 +42,10 @@ export function SearchFormPage({ onSubmit, isLoading = false, defaultResource = 
       >
         <ResourceRadioGroup form={form} />
         <SearchInput form={form} />
-        <form.Subscribe selector={(state: any) => [state.values.search]}>
-          {([searchValue]: any) => {
-            const isSearchEmpty = !searchValue || !searchValue.trim()
+        <form.Subscribe selector={(state) => [state.values.search]}>
+          {([searchValue]) => {
+            const searchValueString = searchValue as string
+            const isSearchEmpty = !searchValueString || !searchValueString.trim()
             return (
               <Button type="submit" disabled={isLoading || isSearchEmpty}>
                 {isLoading ? 'SEARCHING...' : 'SEARCH'}

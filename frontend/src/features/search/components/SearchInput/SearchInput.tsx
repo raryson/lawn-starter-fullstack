@@ -1,7 +1,9 @@
 import './SearchInput.css'
+import { type SearchFormApi, type SearchFormValues } from '../../types'
+import { type SwapiResource } from '@/lib/api'
 
 interface SearchInputProps {
-  form: any
+  form: SearchFormApi
 }
 
 export function SearchInput({ form }: SearchInputProps) {
@@ -13,20 +15,21 @@ export function SearchInput({ form }: SearchInputProps) {
   }
 
   return (
-    <form.Subscribe selector={(state: any) => [state.values.resource]}>
-      {([resource]: any) => (
-        <form.Field
-          name="search"
-          validators={{
-            onChange: ({ value }: any) => {
-              if (!value || !value.trim()) {
-                return undefined // Allow empty for now
-              }
-              return undefined
-            },
-          }}
-        >
-          {(field: any) => (
+    <form.Subscribe selector={(state: { values: SearchFormValues }) => [state.values.resource]}>
+      {([resource]: [SwapiResource]) => {
+        return (
+          <form.Field
+            name="search"
+            validators={{
+              onChange: ({ value }: { value: string }) => {
+                if (!value || !value.trim()) {
+                  return undefined
+                }
+                return undefined
+              },
+            }}
+          >
+            {(field: { state: { value: string; meta?: { errors?: string[] } }; handleChange: (value: string) => void; handleBlur: () => void; name: string }) => (
             <div>
               <input
                 type="text"
@@ -36,15 +39,16 @@ export function SearchInput({ form }: SearchInputProps) {
                 placeholder={getPlaceholder(resource || 'people')}
                 className="search-input"
               />
-              {field.state.meta.errors && (
+              {field.state.meta?.errors && (
                 <p className="mt-1 text-sm text-red-600">
                   {field.state.meta.errors[0]}
                 </p>
               )}
             </div>
-          )}
-        </form.Field>
-      )}
+            )}
+          </form.Field>
+        )
+      }}
     </form.Subscribe>
   )
 }

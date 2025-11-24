@@ -1,13 +1,15 @@
 import './ResourceRadioGroup.css'
+import { type SearchFormApi, type SearchFormValues } from '../../types'
+import { type SwapiResource } from '@/lib/api'
 
 interface ResourceRadioGroupProps {
-  form: any
+  form: SearchFormApi
 }
 
 export function ResourceRadioGroup({ form }: ResourceRadioGroupProps) {
   return (
     <form.Field name="resource">
-      {(field: any) => (
+      {(field: { state: { value: SwapiResource }; handleChange: (value: SwapiResource) => void; name: string }) => (
         <div className="radio-group">
           <div className="radio-container">
             <label className="radio-label">
