@@ -11,7 +11,7 @@ export function OpeningCrawlSection({ openingCrawl }: OpeningCrawlSectionProps) 
 
   return (
     <div>
-      <h2 className="opening-crawl-heading font-semibold text-gray-900">Opening Crawl</h2>
+      <h2 className="opening-crawl-heading font-bold text-gray-900">Opening Crawl</h2>
       <div className="space-y-4">
         {paragraphs.length > 0 ? (
           paragraphs.map((paragraph, index) => (

@@ -7,14 +7,18 @@ export function SearchPage() {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
-        <SearchFormPage onSubmit={handleSearch} isLoading={isLoading} />
-        <ResultsPanelPage
-          isLoading={isLoading}
-          error={error}
-          data={data}
-          hasSearched={hasSearched}
-        />
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-4 items-start">
+        <div className="lg:col-span-2">
+          <SearchFormPage onSubmit={handleSearch} isLoading={isLoading} />
+        </div>
+        <div className="lg:col-span-3">
+          <ResultsPanelPage
+            isLoading={isLoading}
+            error={error}
+            data={data}
+            hasSearched={hasSearched}
+          />
+        </div>
       </div>
     </div>
   )

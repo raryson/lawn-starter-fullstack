@@ -18,7 +18,7 @@ export function MovieCharactersSection({
 }: MovieCharactersSectionProps) {
   return (
     <div className="movie-characters-section">
-      <h2 className="movie-characters-heading font-semibold text-gray-900">Characters</h2>
+      <h2 className="movie-characters-heading font-bold text-gray-900">Characters</h2>
       {isLoading ? (
         <p className="text-gray-500">Loading characters...</p>
       ) : characters && characters.length > 0 ? (

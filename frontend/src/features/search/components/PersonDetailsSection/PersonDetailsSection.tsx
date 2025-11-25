@@ -17,7 +17,7 @@ export function PersonDetailsSection({ properties }: PersonDetailsSectionProps) 
 
   return (
     <div className="person-details-section">
-      <h2 className="person-details-heading font-semibold text-gray-900 mb-4">Details</h2>
+      <h2 className="person-details-heading font-bold text-gray-900 mb-4">Details</h2>
       <div className="space-y-2">
         {details.map(({ label, value }) => (
           <div key={label} className="detail-row">

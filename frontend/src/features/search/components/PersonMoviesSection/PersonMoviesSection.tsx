@@ -16,7 +16,7 @@ export function PersonMoviesSection({ films, isLoading = false }: PersonMoviesSe
 
   return (
     <div className="person-movies-section">
-      <h2 className="person-movies-heading font-semibold text-gray-900 mb-4">Movies</h2>
+      <h2 className="person-movies-heading font-bold text-gray-900 mb-4">Movies</h2>
       {isLoading ? (
         <p className="text-gray-500">Loading movies...</p>
       ) : films && films.length > 0 ? (

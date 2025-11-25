@@ -1,5 +1,6 @@
 .opening-crawl-heading {
   font-size: 16px;
+  font-weight: bold;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--pinkish-grey);
   padding-bottom: 16px;

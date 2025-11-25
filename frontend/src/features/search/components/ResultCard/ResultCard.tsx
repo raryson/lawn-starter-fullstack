@@ -1,3 +1,4 @@
+import './ResultCard.css'
 import { useNavigate } from '@tanstack/react-router'
 import { type SwapiResult } from '@/lib/api'
 import { Button } from '@/lib/components/Button'
@@ -20,8 +21,8 @@ export function ResultCard({ result }: ResultCardProps) {
   }
 
   return (
-    <div className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
-      <span className="text-gray-900">{name}</span>
+    <div className="flex items-center justify-between py-2 result-card-item">
+      <span className="text-gray-900 font-bold">{name}</span>
       <Button onClick={handleSeeDetails} className="w-auto">
         SEE DETAILS
       </Button>
